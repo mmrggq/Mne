@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>منصة تداول أسطورية</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+
+    header {
+      background-color: #111;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 2px solid #00ffc3;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .ticker {
+      background-color: #000;
+      color: #0f0;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+      box-shadow: 0 0 10px #0f0;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      animation: slide 15s linear infinite;
+    }
+
+    @keyframes slide {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .trade-box {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffc3;
+    }
+
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      font-size: 16px;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 48%;
+      padding: 10px;
+      margin: 5px 1%;
+      font-size: 16px;
+      background-color: #00ffc3;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0f0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #111;
+      border-top: 2px solid #00ffc3;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>منصة تداول أبو مسعود</header>
+
+  <div class="container">
+    <div class="ticker" id="ticker">
+      تحميل بيانات السوق...
+    </div>
+
+    <div class="trade-box">
+      <h2 style="text-align:center;">نموذج التداول</h2>
+      <label>اختر السهم:</label>
+      <select id="stock">
+        <option value="AAPL">أبل (AAPL)</option>
+        <option value="TSLA">تسلا (TSLA)</option>
+        <option value="AMZN">أمازون (AMZN)</option>
+      </select>
+
+      <label>عدد الأسهم:</label>
+      <input type="number" id="amount" placeholder="مثلاً: 10">
+
+      <div style="display:flex; justify-content:space-between;">
+        <button onclick="trade('buy')">شراء</button>
+        <button onclick="trade('sell')">بيع</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 منصتك الأسطورية - بإبداع أبو مسعود</footer>
+
+  <script>
+    const ticker = document.getElementById('ticker');
+    const prices = {
+      AAPL: 189.12,
+      TSLA: 254.89,
+      AMZN: 147.77
+    };
+
+    function updateTicker() {
+      const text = `أبل: $${prices.AAPL.toFixed(2)} | تسلا: $${prices.TSLA.toFixed(2)} | أمازون: $${prices.AMZN.toFixed(2)}`;
+      ticker.textContent = text;
+    }
+
+    function trade(type) {
+      const stock = document.getElementById('stock').value;
+      const amount = document.getElementById('amount').value;
+      if (!amount || amount <= 0) {
+        alert('أدخل عدد الأسهم بشكل صحيح!');
+        return;
+      }
+
+      const price = prices[stock];
+      const total = price * amount;
+      alert(`${type === 'buy' ? 'شراء' : 'بيع'} ${amount} سهم من ${stock} بسعر $${price.toFixed(2)} للسهم = $${total.toFixed(2)}`);
+    }
+
+    setInterval(() => {
+      for (let key in prices) {
+        const change = (Math.random() - 0.5) * 2;
+        prices[key] += change;
+      }
+      updateTicker();
+    }, 5000);
+
+    updateTicker();
+  </script>
+</body>
+</html>
